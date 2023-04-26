@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Chess;
+namespace Chess\Model;
 
-use ReflectionClass;
 use Chess\Exceptions\BoardException;
-use Chess\Interfaces\Board as BoardInterface;
-use Chess\Interfaces\Player as PlayerInterface;
-use Chess\Interfaces\Figure as FigureInterface;
+use Chess\Model\BoardInterface as BoardInterface;
+use Chess\Model\Figures\FigureInterface as FigureInterface;
+use Chess\Model\PlayerInterface as PlayerInterface;
+use ReflectionClass;
 use ReflectionException;
 
 class Board implements BoardInterface

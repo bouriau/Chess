@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Chess\Figures;
+namespace Chess\Model\Figures;
 
-use Chess\AbstractFigure;
-use Chess\Interfaces\Figures\Castles;
 use Chess\Traits\Figures\Moves\Alongside;
 
-class Rook extends AbstractFigure implements Castles
+class Rook extends AbstractFigure implements CastlesInterface
 {
     use Alongside;
 

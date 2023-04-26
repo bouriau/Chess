@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Chess\Interfaces\Figures;
+namespace Chess\Model\Figures;
 
 /**
  * This interface should be implemented to king.
  * Stacking this figure should lead to victory of opposite player.
  */
-interface King extends Castles
+interface KingInterface extends CastlesInterface
 {
     /**
      * Checks whether move is castling

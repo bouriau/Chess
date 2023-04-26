@@ -2,30 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Chess\Figures;
+namespace Chess\Model\Figures;
 
-use Chess\AbstractFigure;
 use Chess\Traits\Figures\Moves\Askew;
-use Chess\Traits\Figures\Moves\Alongside;
 
-class Queen extends AbstractFigure
+class Bishop extends AbstractFigure
 {
-    use Askew, Alongside;
+    use Askew;
 
     /**
-    * @inheritDoc
-    */
+     * {@inheritdoc}
+     */
     public function id(): string
     {
-        return 'q';
+        return 'b';
     }
 
     /**
-    * @inheritDoc
-    */
+     * {@inheritdoc}
+     */
     public function canMoveTo(string $x, int $y): bool
     {
-        if (! $this->canMoveAlongside($x, $y) && ! $this->canMoveAskew($x, $y)) {
+        if (! $this->canMoveAskew($x, $y)) {
             return false;
         }
 

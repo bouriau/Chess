@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Chess;
+namespace Chess\Model;
 
-use Chess\Interfaces\Player as PlayerInterface;
-use Chess\Interfaces\MovesManager as MovesManagerInterface;
+use Chess\Manager\MovesManager;
+use Chess\Manager\MovesManagerInterface as MovesManagerInterface;
+use Chess\Model\PlayerInterface as PlayerInterface;
 
 class Player implements PlayerInterface
 {

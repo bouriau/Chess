@@ -1,11 +1,11 @@
 <?php
 
-namespace Chess\Interfaces\Figures;
+namespace Chess\Model\Figures;
 
 /**
  * Implement this feature if figure can perform castling
  */
-interface Castles
+interface CastlesInterface
 {
     /**
      * Whether figure is allowed to castle.

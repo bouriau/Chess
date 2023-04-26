@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Chess;
+namespace Chess\Factory;
 
-use Chess\Interfaces\PlayerFactory as PlayerFactoryInterface;
-use Chess\Interfaces\MovesManagerFactory as MovesManagerFactoryInterface;
-use Chess\Interfaces\Player as PlayerInterface;
+use Chess\Factory\MovesManagerFactoryInterface as MovesManagerFactoryInterface;
+use Chess\Factory\PlayerFactoryInterface as PlayerFactoryInterface;
+use Chess\Model\Player;
+use Chess\Model\PlayerInterface as PlayerInterface;
 
 class PlayerFactory implements PlayerFactoryInterface
 {

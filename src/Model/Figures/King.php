@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Chess\Figures;
+namespace Chess\Model\Figures;
 
-use Chess\AbstractFigure;
-use Chess\Interfaces\Figure as FigureInterface;
-use Chess\Interfaces\Figures\King as KingInterface;
-use Chess\Traits\Figures\Moves\Askew;
+use Chess\Model\Figures\FigureInterface as FigureInterface;
 use Chess\Traits\Figures\Moves\Alongside;
+use Chess\Traits\Figures\Moves\Askew;
 
 class King extends AbstractFigure implements KingInterface
 {

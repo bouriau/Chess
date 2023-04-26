@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Chess;
+namespace Chess\Model;
 
-use ReflectionClass;
 use Chess\Exceptions\MoveException;
 use Chess\Exceptions\PromotionException;
-use Chess\Interfaces\Board as BoardInterface;
-use Chess\Interfaces\Player as PlayerInterface;
-use Chess\Interfaces\Move as MoveInterface;
-use Chess\Interfaces\Figure as FigureInterface;
-use Chess\Interfaces\Figures\King;
-use Chess\Interfaces\Figures\Castles;
-use Chess\Interfaces\Figures\Promotes;
+use Chess\Model\BoardInterface as BoardInterface;
+use Chess\Model\Figures\CastlesInterface;
+use Chess\Model\Figures\FigureInterface as FigureInterface;
+use Chess\Model\Figures\KingInterface;
+use Chess\Model\Figures\PromotesInterface;
+use Chess\Model\MoveInterface as MoveInterface;
+use Chess\Model\PlayerInterface as PlayerInterface;
+use ReflectionClass;
 
 class Move implements MoveInterface
 {
@@ -67,7 +67,7 @@ class Move implements MoveInterface
         }
 
         if (
-            $fromFigure instanceof King
+            $fromFigure instanceof KingInterface
             &&
             $fromFigure->isMoveCastling($toX, $toY)
             &&
@@ -86,7 +86,7 @@ class Move implements MoveInterface
             $this->board->stack($toX, $toY);
         }
 
-        if ($fromFigure instanceof Promotes && $fromFigure->canPromote($toX, $toY)) {
+        if ($fromFigure instanceof PromotesInterface && $fromFigure->canPromote($toX, $toY)) {
             if (! $this->promotes) {
                 throw new PromotionException("No figure defined for promotion");
             }
@@ -139,7 +139,7 @@ class Move implements MoveInterface
 
         $castlingFigure = $this->board->get($currentX, $currentY);
 
-        if (! $castlingFigure instanceof Castles) {
+        if (! $castlingFigure instanceof CastlesInterface) {
             throw new MoveException("Figure at the end of the board ($currentX$currentY) cannot partake in castling");
         }
 

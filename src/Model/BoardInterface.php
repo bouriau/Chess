@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Chess\Interfaces;
+namespace Chess\Model;
 
-interface Board
+use Chess\Model\Figures\FigureInterface;
+
+interface BoardInterface
 {
     /**
      * Return board width (as width elements array)
@@ -33,9 +35,9 @@ interface Board
      *
      * @param string $x
      * @param int    $y
-     * @return Figure|null
+     * @return FigureInterface|null
      */
-    public function get(string $x, int $y): ?Figure;
+    public function get(string $x, int $y): ?FigureInterface;
 
 
     /**
@@ -43,9 +45,9 @@ interface Board
      *
      * @param string $x
      * @param int    $y
-     * @param Figure $figure
+     * @param FigureInterface $figure
      */
-    public function set(string $x, int $y, Figure $figure);
+    public function set(string $x, int $y, FigureInterface $figure);
 
 
     /**
@@ -77,12 +79,12 @@ interface Board
     /**
      * Get figure of given class that belongs to a player from stack
      *
-     * @param Player $player
+     * @param PlayerInterface $player
      * @param string $figure
      *
-     * @return Figure
+     * @return FigureInterface
      */
-    public function unstack(Player $player, string $figure) : Figure;
+    public function unstack(PlayerInterface $player, string $figure) : FigureInterface;
 
 
     /**
@@ -90,8 +92,8 @@ interface Board
      *
      * @param string $x
      * @param int    $y
-     * @param Player $player
-     * @param Figure  $figure
+     * @param PlayerInterface $player
+     * @param FigureInterface  $figure
      */
-    public function add(string $x, int $y, Player $player, Figure $figure);
+    public function add(string $x, int $y, PlayerInterface $player, FigureInterface $figure);
 }

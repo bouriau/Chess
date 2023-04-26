@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Chess;
+namespace Chess\Manager;
 
-use Chess\Interfaces\Board as BoardInterface;
-use Chess\Interfaces\Player as PlayerInterface;
-use Chess\Interfaces\Move as MoveInterface;
-use Chess\Interfaces\MovesManager as MovesManagerInterface;
+use Chess\Manager\MovesManagerInterface as MovesManagerInterface;
+use Chess\Model\Board;
+use Chess\Model\BoardInterface as BoardInterface;
+use Chess\Model\Move;
+use Chess\Model\MoveInterface as MoveInterface;
+use Chess\Model\PlayerInterface as PlayerInterface;
 
 class MovesManager implements MovesManagerInterface
 {

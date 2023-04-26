@@ -2,19 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Chess\Interfaces;
+namespace Chess\Model\Figures;
 
-interface Figure
+use Chess\Model\BoardInterface;
+use Chess\Model\PlayerInterface;
+
+interface FigureInterface
 {
     /**
      * Figure constructor.
      *
      * @param string $x Figure x-axis position
      * @param int    $y Figure y-axis position
-     * @param Board  $board Board that this figure belongs to
-     * @param Player $player Player which this figure belongs to
+     * @param BoardInterface  $board Board that this figure belongs to
+     * @param PlayerInterface $player Player which this figure belongs to
      */
-    public function __construct(string $x, int $y, Board $board, Player $player);
+    public function __construct(string $x, int $y, BoardInterface $board, PlayerInterface $player);
 
     /**
      * Get figure id (usually one letter, like n for knight).
@@ -28,9 +31,9 @@ interface Figure
     /**
      * Get figure owner instance.
      *
-     * @return Player
+     * @return PlayerInterface
      */
-    public function getPlayer() : Player;
+    public function getPlayer() : PlayerInterface;
 
     /**
      * Sets figure x coordinates.

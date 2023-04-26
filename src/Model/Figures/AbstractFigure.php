@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Chess;
+namespace Chess\Model\Figures;
 
-use Chess\Interfaces\Board as BoardInterface;
-use Chess\Interfaces\Player as PlayerInterface;
-use Chess\Interfaces\Figure;
+use Chess\Model\BoardInterface as BoardInterface;
+use Chess\Model\PlayerInterface as PlayerInterface;
 
-abstract class AbstractFigure implements Figure
+abstract class AbstractFigure implements FigureInterface
 {
     /**
      * Board that figure belongs to.

@@ -2,12 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Chess\Figures;
+namespace Chess\Model\Figures;
 
-use Chess\AbstractFigure;
-use Chess\Interfaces\Figures\Promotes;
-
-class Pawn extends AbstractFigure implements Promotes
+class Pawn extends AbstractFigure implements PromotesInterface
 {
     /**
      * {@inheritdoc}

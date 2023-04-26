@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Chess;
+namespace Chess\Manager;
 
 use Chess\Exceptions\PlayerException;
-use Chess\Interfaces\PlayersManager as PlayersManagerInterface;
-use Chess\Interfaces\Player as PlayerInterface;
+use Chess\Manager\PlayersManagerInterface as PlayersManagerInterface;
+use Chess\Model\Player;
+use Chess\Model\PlayerInterface as PlayerInterface;
 
 class PlayersManager implements PlayersManagerInterface
 {

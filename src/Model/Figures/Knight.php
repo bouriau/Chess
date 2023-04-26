@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Chess\Figures;
-
-use Chess\AbstractFigure;
+namespace Chess\Model\Figures;
 
 class Knight extends AbstractFigure
 {

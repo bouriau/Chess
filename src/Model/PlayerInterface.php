@@ -2,16 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Chess\Interfaces;
+namespace Chess\Model;
 
-interface Player
+use Chess\Manager\MovesManagerInterface;
+
+interface PlayerInterface
 {
     /**
      * Player constructor
      *
-     * @param MovesManager $manager Player's moves manager
+     * @param MovesManagerInterface $manager Player's moves manager
      */
-    public function __construct(MovesManager $manager);
+    public function __construct(MovesManagerInterface $manager);
 
     /**
      * Get player id
@@ -21,9 +23,9 @@ interface Player
     public function id() : int;
 
     /**
-     * @return MovesManager|null
+     * @return MovesManagerInterface|null
      */
-    public function move(): ?MovesManager;
+    public function move(): ?MovesManagerInterface;
 
     /**
      * Set if player moves upwards or downwards y-axis
