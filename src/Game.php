@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess;
 
 use Chess\Interfaces\Game as GameInterface;
@@ -12,12 +14,12 @@ class Game implements GameInterface
     /**
      * @var BoardInterface
      */
-    protected $board;
+    protected BoardInterface $board;
 
     /**
      * @var PlayersManagerInterface
      */
-    protected $players;
+    protected PlayersManagerInterface $players;
 
     /**
      * {@inheritdoc}

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess;
 
 use ReflectionClass;
@@ -16,41 +18,28 @@ use Chess\Interfaces\Figures\Promotes;
 class Move implements MoveInterface
 {
     /**
-     * @var BoardInterface
+     * @var ?string
      */
-    protected $board;
+    protected ?string $promotes = null;
 
     /**
-     * @var PlayerInterface
-     */
-    protected $player;
-
-    /**
-     * @var string
-     */
-    protected $from;
-
-    /**
-     * @var string
-     */
-    protected $promotes = null;
-
-    /**
-     * @param BoardInterface  $board
+     * @param BoardInterface $board
      * @param PlayerInterface $player
-     * @param string          $frm
+     * @param string $from
      */
-    public function __construct(BoardInterface $board, PlayerInterface $player, string $from)
+    public function __construct(
+        protected BoardInterface $board,
+        protected PlayerInterface $player,
+        protected string $from
+    )
     {
-        $this->board = $board;
-        $this->player = $player;
-        $this->from = $from;
     }
 
     /**
-     * {@inheritdoc}
+     * @throws MoveException
+     * @throws PromotionException
      */
-    public function to(string $to)
+    public function to(string $to): bool
     {
         $from = $this->splitCords($this->from);
         $to = $this->splitCords($to);
@@ -74,7 +63,7 @@ class Move implements MoveInterface
         }
 
         if ($fromFigure->getPlayer() !== $this->player) {
-            throw new MoveException("Figure on {$fromX}{$fromY} does not belong to you");
+            throw new MoveException("Figure on $fromX$fromY does not belong to you");
         }
 
         if (
@@ -88,7 +77,7 @@ class Move implements MoveInterface
         } else if (! $fromFigure->canMoveTo($toX, $toY)) {
             $figureClass = get_class($fromFigure);
 
-            throw new MoveException("You cannot move figure {$figureClass} from {$fromX}{$fromY} to {$toX}{$toY}");
+            throw new MoveException("You cannot move figure $figureClass from $fromX$fromY to $toX$toY");
         }
 
         $this->board->remove($fromX, $fromY);
@@ -110,10 +99,7 @@ class Move implements MoveInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function from(string $from)
+    public function from(string $from): static
     {
         $this->from = $from;
 
@@ -121,19 +107,19 @@ class Move implements MoveInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @throws PromotionException
      */
-    public function promotes(string $figure)
+    public function promotes(string $figure): static
     {
         if (! class_exists($figure)) {
-            throw new PromotionException("Class {$figure} does not exists");
+            throw new PromotionException("Class $figure does not exists");
         }
 
         $reflection = new ReflectionClass($figure);
         $figureInterface = FigureInterface::class;
 
         if (! $reflection->implementsInterface($figureInterface)) {
-            throw new PromotionException("Class {$figure} must implement {$figureInterface} interface");
+            throw new PromotionException("Class $figure must implement $figureInterface interface");
         }
 
         $this->promotes = $figure;
@@ -143,27 +129,28 @@ class Move implements MoveInterface
 
     /**
      * @param FigureInterface $figure
-     *
+     * @param string $x
+     * @param int $y
      * @throws MoveException
      */
-    protected function handleCastling(FigureInterface $figure, string $x, int $y)
+    protected function handleCastling(FigureInterface $figure, string $x, int $y): void
     {
         list ($currentX, $currentY) =  $figure->getCastlingPartnerPosition($x, $y);
 
         $castlingFigure = $this->board->get($currentX, $currentY);
 
         if (! $castlingFigure instanceof Castles) {
-            throw new MoveException("Figure at the end of the board ({$currentX}{$currentY}) cannot partake in castling");
+            throw new MoveException("Figure at the end of the board ($currentX$currentY) cannot partake in castling");
         }
 
         list ($castlingX, $castlingY) = $figure->getCastlingPartnerDestination($x, $y);
 
         if (! $castlingFigure->canCastle($castlingX, $castlingY)) {
-            throw new MoveException("Castling figure at {$currentX}{$currentY} is not allowed to castle");
+            throw new MoveException("Castling figure at $currentX$currentY is not allowed to castle");
         }
 
         if (! $castlingFigure->canMoveTo($castlingX, $castlingY)) {
-            throw new MoveException("Castling figure cannot be moved from {$currentX}{$currentY} to {$castlingX}{$castlingY}");
+            throw new MoveException("Castling figure cannot be moved from $currentX$currentY to $castlingX$castlingY");
         }
 
         // Move castling figure
@@ -177,7 +164,7 @@ class Move implements MoveInterface
      *
      * @throws MoveException
      */
-    protected function splitCords($value)
+    protected function splitCords(string $value): array
     {
         preg_match('/([a-z]+?)([1-9]+?)/', $value, $matches);
 
@@ -186,7 +173,7 @@ class Move implements MoveInterface
 
         // Check if cords are correct
         if (count($matches) !== 2 && is_string($matches[0]) && is_numeric($matches[1])) {
-            throw new MoveException("Given coordinates ({$value}) are invalid");
+            throw new MoveException("Given coordinates ($value) are invalid");
         }
 
         return array_map('strtolower', $matches);
@@ -202,17 +189,17 @@ class Move implements MoveInterface
      *
      * @throws MoveException
      */
-    protected function checkBoundaries(string $fromX, int $fromY, string $toX, int $toY)
+    protected function checkBoundaries(string $fromX, int $fromY, string $toX, int $toY): void
     {
         $width = $this->board->width();
         $height = $this->board->height();
 
         if (! in_array($fromX, $width, true) || ! in_array($fromY, $height, true)) {
-            throw new MoveException("From ({$fromX}{$fromY}) is beyond board boundaries");
+            throw new MoveException("From ($fromX$fromY) is beyond board boundaries");
         }
 
         if (! in_array($toX, $width, true) || ! in_array($toY, $height, true)) {
-            throw new MoveException("To ({$toX}{$toY}) is beyond board boundaries");
+            throw new MoveException("To ($toX$toY) is beyond board boundaries");
         }
     }
 }

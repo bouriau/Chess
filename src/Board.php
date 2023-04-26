@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess;
 
 use ReflectionClass;
@@ -7,32 +9,27 @@ use Chess\Exceptions\BoardException;
 use Chess\Interfaces\Board as BoardInterface;
 use Chess\Interfaces\Player as PlayerInterface;
 use Chess\Interfaces\Figure as FigureInterface;
+use ReflectionException;
 
 class Board implements BoardInterface
 {
-    /**
-     * @var array
-     */
-    protected $fields;
+    protected array $fields;
 
     /**
      * @var string[]
      */
-    protected $width;
+    protected array $width;
 
     /**
      * @var int[]
      */
-    protected $height;
+    protected array $height;
 
     /**
      * @var FigureInterface[]
      */
-    protected $stack;
+    protected array $stack;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(string $width = 'h', int $height = 8)
     {
         $this->width = range('a', $width);
@@ -72,25 +69,26 @@ class Board implements BoardInterface
     /**
      * {@inheritdoc}
      */
-    public function merge(array $fields)
+    public function merge(array $fields): void
     {
         $this->fields = array_replace_recursive($this->fields, $fields);
     }
 
     /**
      * {@inheritdoc}
+     * @throws BoardException|ReflectionException
      */
-    public function add(string $x, int $y, PlayerInterface $player, $figure)
+    public function add(string $x, int $y, PlayerInterface $player, mixed $figure): void
     {
         if (is_string($figure) && ! class_exists($figure)) {
-            throw new BoardException("Class {$figure} does not exists");
+            throw new BoardException("Class $figure does not exists");
         }
 
         $reflection = new ReflectionClass($figure);
         $figureInterface = FigureInterface::class;
 
         if (! $reflection->implementsInterface($figureInterface)) {
-            throw new BoardException("Class {$figure} must implement {$figureInterface}");
+            throw new BoardException("Class $figure must implement $figureInterface");
         }
 
         /** @var FigureInterface $figure */
@@ -103,11 +101,12 @@ class Board implements BoardInterface
 
     /**
      * {@inheritdoc}
+     * @throws BoardException
      */
-    public function set(string $x, int $y, FigureInterface $figure)
+    public function set(string $x, int $y, FigureInterface $figure): void
     {
         if (! $this->isFieldInBoundaries($x, $y)) {
-            throw new BoardException("Field {$x}{$y} is not in board boundaries");
+            throw new BoardException("Field $x$y is not in board boundaries");
         }
 
         $figure->setX($x);
@@ -118,11 +117,12 @@ class Board implements BoardInterface
 
     /**
      * {@inheritdoc}
+     * @throws BoardException
      */
-    public function get(string $x, int $y)
+    public function get(string $x, int $y): ?FigureInterface
     {
         if (! $this->isFieldInBoundaries($x, $y)) {
-            throw new BoardException("Field {$x}{$y} is not in board boundaries");
+            throw new BoardException("Field $x$y is not in board boundaries");
         }
 
         return $this->fields[$x][$y];
@@ -131,15 +131,16 @@ class Board implements BoardInterface
     /**
      * {@inheritdoc}
      */
-    public function remove(string $x, int $y)
+    public function remove(string $x, int $y): void
     {
         $this->fields[$x][$y] = null;
     }
 
     /**
      * {@inheritdoc}
+     * @throws BoardException
      */
-    public function stack(string $x, int $y)
+    public function stack(string $x, int $y): void
     {
         $figure = $this->get($x, $y);
         $this->remove($x, $y);
@@ -156,6 +157,7 @@ class Board implements BoardInterface
 
     /**
      * {@inheritdoc}
+     * @throws BoardException
      */
     public function unstack(PlayerInterface $player, string $figure) : FigureInterface
     {
@@ -173,7 +175,7 @@ class Board implements BoardInterface
      * @param int    $y
      * @return bool
      */
-    protected function isFieldInBoundaries(string $x, int $y)
+    protected function isFieldInBoundaries(string $x, int $y): bool
     {
         return in_array($x, $this->width, true) && in_array($y, $this->height, true);
     }

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess\Traits\Figures\Moves;
 
 trait Askew
 {
-    public function canMoveAskew(string $x, int $y)
+    public function canMoveAskew(string $x, int $y): bool
     {
         $rangeX = range($this->x, $x);
         $rangeY = range($this->y, $y);

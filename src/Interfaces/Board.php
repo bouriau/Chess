@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess\Interfaces;
 
 interface Board
@@ -16,7 +18,6 @@ interface Board
      *
      * @return array
      */
-
     public function height() : array;
 
 
@@ -34,7 +35,7 @@ interface Board
      * @param int    $y
      * @return Figure|null
      */
-    public function get(string $x, int $y);
+    public function get(string $x, int $y): ?Figure;
 
 
     /**
@@ -90,7 +91,7 @@ interface Board
      * @param string $x
      * @param int    $y
      * @param Player $player
-     * @param mixed  $figure
+     * @param Figure  $figure
      */
-    public function add(string $x, int $y, Player $player, $figure);
-};
+    public function add(string $x, int $y, Player $player, Figure $figure);
+}

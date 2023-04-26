@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess\Figures;
 
 use Chess\AbstractFigure;
@@ -111,15 +113,15 @@ class King extends AbstractFigure implements KingInterface
     }
 
     /**
-     * Determine wheter figure is checked.
+     * Determine whether figure is checked.
      *
-     * @param mixed  $enemyFigures
+     * @param FigureInterface[] $enemyFigures
      * @param string $x
      * @param int    $y
      *
      * @return bool
      */
-    protected function isCheckedBy($enemyFigures, string $x, int $y): bool
+    protected function isCheckedBy(array $enemyFigures, string $x, int $y): bool
     {
         foreach ($enemyFigures as $figure) {
             if ($figure->canMoveTo($x, $y)) {
@@ -135,7 +137,7 @@ class King extends AbstractFigure implements KingInterface
      *
      * @return FigureInterface[]
      */
-    protected function getEnemyFigures()
+    protected function getEnemyFigures(): array
     {
         // Get every field
         $fields = $this->board->fields();
@@ -143,16 +145,17 @@ class King extends AbstractFigure implements KingInterface
         // Remove current figure
         unset($fields[$this->x][$this->y]);
 
+
+//        dd($fields);
         // Flatten array
-        $flat = call_user_func_array('array_merge', $fields);
+        $flat = call_user_func_array('array_merge', array_values($fields));
 
         // Filter empty fields and return only enemy figures
-        $flat = array_filter($flat, function ($figure) {
+        return array_filter($flat, function ($figure) {
+//            dd($figure);
             /* @var FigureInterface|null $figure */
             return $figure !== null && $figure->getPlayer() !== $this->getPlayer();
         });
-
-        return $flat;
     }
 
     /**

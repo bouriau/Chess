@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess\Figures;
 
 use Chess\AbstractFigure;
@@ -21,7 +23,7 @@ class Pawn extends AbstractFigure implements Promotes
     public function canMoveTo(string $x, int $y) : bool
     {
         // Check if pawn is moving forward
-        if (! $this->movesForward()) {
+        if (!$this->movesForward($x, $y)) {
             return false;
         }
 
@@ -59,7 +61,7 @@ class Pawn extends AbstractFigure implements Promotes
         if (
             $diff === 1
             && ($x === $leftX || $x === $rightX)
-            && ($leftX !== $this->x || $rightX !== $thix->x)
+            && ($leftX !== $this->x || $rightX !== $this->x)
             && $figure !== null
             && $figure->getPlayer() !== $this->player
         ) {
@@ -93,9 +95,10 @@ class Pawn extends AbstractFigure implements Promotes
      * Check whether pawn moves forward
      *
      * @param string $x
-     * @param int    $y
+     * @param int $y
+     * @return bool
      */
-    protected function movesForward(string $x, int $y)
+    protected function movesForward(string $x, int $y): bool
     {
         if ($this->getPlayer()->doesMoveUpwards()) {
             if ($y < $this->y) {

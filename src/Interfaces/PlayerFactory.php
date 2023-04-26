@@ -1,7 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess\Interfaces;
-use Chess\Interfaces\MovesManagerFactory;
 
 interface PlayerFactory
 {

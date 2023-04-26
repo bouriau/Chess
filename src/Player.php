@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess;
 
 use Chess\Interfaces\Player as PlayerInterface;
@@ -10,21 +12,26 @@ class Player implements PlayerInterface
     /**
      * @var MovesManager
      */
-    protected $manager;
+    protected MovesManager $manager;
 
     /**
      * @var bool
      */
-    protected $movesUpwards = false;
+    protected bool $movesUpwards = false;
 
     /**
-     * Players counter so we can create unique id
+     * Players counter, so we can create unique id
      * It depends on implementation
      * Feel free to change it in your own implementation
      *
      * @var int
      */
-    public static $playersCount = 1;
+    public static int $playersCount = 1;
+
+    /**
+     * @var int
+     */
+    private int $id;
 
     /**
      * {@inheritdoc}
@@ -39,7 +46,7 @@ class Player implements PlayerInterface
     /**
      * {@inheritdoc}
      */
-    public function id() : string
+    public function id() : int
     {
         return $this->id;
     }
@@ -47,7 +54,7 @@ class Player implements PlayerInterface
     /**
      * {@inheritdoc}
      */
-    public function move(...$args)
+    public function move(...$args): ?MovesManagerInterface
     {
         $argc = count($args);
 
@@ -61,7 +68,7 @@ class Player implements PlayerInterface
     /**
      * {@inheritdoc}
      */
-    public function setMovesUpwards(bool $flag = true)
+    public function setMovesUpwards(bool $flag = true): void
     {
         $this->movesUpwards = $flag;
     }

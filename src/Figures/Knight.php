@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess\Figures;
+
 use Chess\AbstractFigure;
 
 class Knight extends AbstractFigure

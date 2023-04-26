@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess\Traits\Figures\Moves;
 
 trait Alongside
 {
-    public function canMoveAlongside(string $x, int $y)
+    public function canMoveAlongside(string $x, int $y): bool
     {
         if ($x !== $this->x && $y !== $this->y) {
             return false;

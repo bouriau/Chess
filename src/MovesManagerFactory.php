@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess;
 
 use Chess\Interfaces\MovesManagerFactory as MovesManagerFactoryInterface;
@@ -9,16 +11,10 @@ use Chess\Interfaces\MovesManager as MovesManagerInterface;
 class MovesManagerFactory implements MovesManagerFactoryInterface
 {
     /**
-     * @var BoardInterface
-     */
-    protected $board;
-
-    /**
      * {@inheritdoc}
      */
-    public function __construct(BoardInterface $board)
+    public function __construct(protected BoardInterface $board)
     {
-        $this->board = $board;
     }
 
     /**

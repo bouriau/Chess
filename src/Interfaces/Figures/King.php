@@ -1,7 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess\Interfaces\Figures;
-use Chess\Interfaces\Figure;
 
 /**
  * This interface should be implemented to king.
@@ -10,7 +11,7 @@ use Chess\Interfaces\Figure;
 interface King extends Castles
 {
     /**
-     * Checks wheter move is castling
+     * Checks whether move is castling
      *
      * @param string $x
      * @param int    $y

@@ -1,28 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess;
 
 use Chess\Interfaces\PlayerFactory as PlayerFactoryInterface;
 use Chess\Interfaces\MovesManagerFactory as MovesManagerFactoryInterface;
 use Chess\Interfaces\Player as PlayerInterface;
 
-
 class PlayerFactory implements PlayerFactoryInterface
 {
-
-    /**
-     * @var MovesManagerFactoryInterface
-     */
-    protected $factory;
-
     /**
     * {@inheritdoc}
     */
-    public function __construct(MovesManagerFactoryInterface $factory)
+    public function __construct(protected MovesManagerFactoryInterface $factory)
     {
-        $this->factory = $factory;
     }
-
 
     /**
     * {@inheritdoc}

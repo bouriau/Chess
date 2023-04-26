@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess\Interfaces;
 
 interface Figure
@@ -16,7 +18,7 @@ interface Figure
 
     /**
      * Get figure id (usually one letter, like n for knight).
-     * In algerbaic chess notation there is no notation for pawn.
+     * In algebraic chess notation there is no notation for pawn.
      * For this package you should use some letter (for example p) to identify pawn.
      *
      * @return string
@@ -45,7 +47,7 @@ interface Figure
     public function setY(int $y);
 
     /**
-     * Cheks whether figure was already moved.
+     * Checks whether figure was already moved.
      *
      * @return bool
      */

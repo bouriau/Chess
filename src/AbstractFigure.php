@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess;
 
 use Chess\Interfaces\Board as BoardInterface;
@@ -13,49 +15,49 @@ abstract class AbstractFigure implements Figure
      *
      * @var BoardInterface
      */
-    protected $board;
+    protected BoardInterface $board;
 
     /**
      * Owner of the figure.
      *
      * @var PlayerInterface
      */
-    protected $player;
+    protected PlayerInterface $player;
 
     /**
      * Current figure x-axis position.
      *
      * @var string
      */
-    protected $x;
+    protected string $x;
 
     /**
      * Current figure y-axis position.
      *
      * @var int
      */
-    protected $y;
+    protected int $y;
 
     /**
      * Figure starting x-axis position.
      *
      * @var string
      */
-    protected $startX;
+    protected string $startX;
 
     /**
-     * Figure starting y-axis postion.
+     * Figure starting y-axis position.
      *
      * @var int
      */
-    protected $startY;
+    protected int $startY;
 
     /**
      * Determines if figure was moved.
      *
      * @var bool
      */
-    protected $wasMoved = false;
+    protected bool $wasMoved = false;
 
     /**
      * {@inheritdoc}
@@ -89,7 +91,7 @@ abstract class AbstractFigure implements Figure
     /**
      * {@inheritdoc}
      */
-    public function setX(string $x)
+    public function setX(string $x): void
     {
         if ($x !== $this->x) {
             $this->wasMoved = true;
@@ -100,7 +102,7 @@ abstract class AbstractFigure implements Figure
     /**
      * {@inheritdoc}
      */
-    public function setY(int $y)
+    public function setY(int $y): void
     {
         if ($y !== $this->y) {
             $this->wasMoved = true;

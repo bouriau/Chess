@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chess\Interfaces;
 
 interface Player
@@ -14,14 +16,14 @@ interface Player
     /**
      * Get player id
      *
-     * @return string
+     * @return int
      */
-    public function id() : string;
+    public function id() : int;
 
     /**
      * @return MovesManager|null
      */
-    public function move();
+    public function move(): ?MovesManager;
 
     /**
      * Set if player moves upwards or downwards y-axis
