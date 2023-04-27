@@ -6,23 +6,20 @@ namespace Chess\Model;
 
 class Route {
 
-    private $path;
-    private $callable;
-    private $matches = [];
-    private $params = [];
+    private string $path;
+    private ?string $callable;
+    private array $matches = [];
+    private array $params = [];
 
     public function __construct($path, $callable){
-        $this->path = trim($path, '/');  // On retire les / inutils
+        $this->path = trim($path, '/');
         $this->callable = $callable;
     }
 
-    /**
-     * Permettra de capturer l'url avec les paramètre
-     * get('/posts/:slug-:id') par exemple
-     **/
-    public function match($url){
+    public function match($url): bool
+    {
         $url = trim($url, '/');
-        $path = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
+        $path = preg_replace_callback('#:(\w+)#', [$this, 'paramMatch'], $this->path);
         $regex = "#^$path$#i";
         if(!preg_match($regex, $url, $matches)){
             return false;
@@ -32,7 +29,8 @@ class Route {
         return true;
     }
 
-    public function call(){
+    public function call()
+    {
         if(is_string($this->callable)){
             $params = explode('#', $this->callable);
             $controller = "Chess\\Controller\\" . $params[0] . "Controller";
@@ -43,12 +41,14 @@ class Route {
         }
     }
 
-    public function with($param, $regex){
+    public function with($param, $regex): static
+    {
         $this->params[$param] = str_replace('(', '(?:', $regex);
-        return $this; // On retourne tjrs l'objet pour enchainer les arguments
+        return $this;
     }
 
-    public function getUrl($params){
+    public function getUrl($params): array|string
+    {
         $path = $this->path;
         foreach($params as $k => $v){
             $path = str_replace(":$k", $v, $path);
@@ -56,7 +56,8 @@ class Route {
         return $path;
     }
 
-    private function paramMatch($match){
+    private function paramMatch($match): string
+    {
         if(isset($this->params[$match[1]])){
             return '(' . $this->params[$match[1]] . ')';
         }
