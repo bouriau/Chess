@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Chess\Model;
 
-class Route {
+class Route implements RouteInterface
+{
 
     private string $path;
     private ?string $callable;

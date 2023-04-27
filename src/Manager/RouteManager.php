@@ -7,7 +7,8 @@ namespace Chess\Manager;
 use Chess\Exceptions\RouterException;
 use Chess\Model\Route;
 
-class RouteManager {
+class RouteManager implements RouteManagerInterface
+{
 
     private string $url;
     private array $routes = [];
